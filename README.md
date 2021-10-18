@@ -1,6 +1,6 @@
-# Global Computer Protocol
+# Single Computer Protocol
 
-A protocol that defines a coalescent, decentralized, global computer — no blockchain required.
+A protocol that lets individual machines act as nodes in a single, coalescent, distributed, global, virtual computer — no blockchain required.
 
 Heavily inspired by holochain.org, ceptr.org, and infocentral.org.
 
@@ -9,6 +9,8 @@ Heavily inspired by holochain.org, ceptr.org, and infocentral.org.
 At its core, this protocol relies on two core concepts:
   1) immutable, content-addressable data via cryptographic hashes
   2) "code as data"
+  3) 
+Essentially: we use the determinism of this protocol to use each node's filesystem as a single universal instance of 256-bit content addressable RAM. To the "virtual machine" (which only exists conceptually), there is no name/location addressable storage, only a single distributed instance of RAM with 10^77 addresses. The protocol is network agnostic; it doesn't care how (or if) you network with other nodes. In practice, you can resolve address lookups using only data local to the node, over local network, over internet via p2p or client-server model, or even through blockchain (though security, validation, and permissions can be handled in far more efficient ways with this protocol, rendering most benefits of blockchain obsolete). On the Single Computer, all data is content addressable, and all code is data.
 
 The compoents of the protocol are:
   1) Data **schema**: structure of data and primitive types of fields; defined using a deterministic binary format
@@ -22,7 +24,7 @@ When we define a schema in a deterministic binary format, we can hash those bits
 
 # Translators
 
-When we define a translator in a deterministic binary format, we get all of those same benefits as schemas. Translators can be semantically linked to the schemas they operate on, making it simple for an agent to say "I have data in {this} schema, is there a translator available to map it onto {that} schema?". This also enables coalescence; if multiple schemas are being devloped in paralell, when one (or several) gain major traction, the defunct schemas can be mapped onto the leading standard, or mutiple similar schemas can be mapped between each other to enable interoperability; for example, if a betamax could have been placed into a VHS player, and the VHS player knew how to identify and translate that data automatically.
+When we define a translator in a deterministic binary format, we get all of those same benefits as schemas. Translators can be semantically linked to the schemas they operate on, making it simple for an agent to say "I have data in {this} schema, is there a translator available to map it onto {that} schema?". This also enables coalescence; if multiple schemas are being devloped in parallel, when one (or several) gain major traction, the defunct schemas can be mapped onto the leading standard, or mutiple similar schemas can be mapped between each other to enable interoperability; for example, if a betamax could have been placed into a VHS player, and the VHS player knew how to identify and translate that data automatically.
 
 # Validator
 
