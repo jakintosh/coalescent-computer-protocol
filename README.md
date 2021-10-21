@@ -1,6 +1,6 @@
-# Single Computer Protocol
+# Coalescent Computer Protocol
 
-A protocol that lets individual machines act as nodes in a single, coalescent, distributed, global, virtual computer — no blockchain required.
+A protocol that lets individual machines act as nodes in a coalescent, distributed, global, virtual computer — no blockchain required.
 
 Heavily inspired by holochain.org, ceptr.org, and infocentral.org.
 
@@ -10,7 +10,7 @@ At its core, this protocol relies on two core concepts:
   1) immutable, content-addressable data via cryptographic hashes
   2) "code as data"
 
-Essentially: we use the determinism of this protocol to use each node's filesystem as a single universal instance of 256-bit content addressable RAM. To the "virtual machine" (which only exists conceptually), there is no name/location addressable storage, only a single distributed instance of RAM with 10^77 addresses. The protocol is network agnostic; it doesn't care how (or if) you network with other nodes. In practice, you can resolve address lookups using only data local to the node, over local network, over internet via p2p or client-server model, or even through blockchain (though security, validation, and permissions can be handled in far more efficient ways with this protocol, rendering most benefits of blockchain obsolete). On the Single Computer, all data is content addressable, and all code is data.
+Essentially: we use the determinism of this protocol to use each node's filesystem as a single universal instance of 256-bit content addressable RAM. To the "virtual machine" (which only exists conceptually), there is no name/location addressable storage, only a single distributed instance of RAM with 10^77 addresses. The protocol is network agnostic; it doesn't care how (or if) you network with other nodes. In practice, you can resolve address lookups using only data local to the node, over local network, over internet via p2p or client-server model, or even through blockchain (though security, validation, and permissions can be handled in far more efficient ways with this protocol, rendering most benefits of blockchain obsolete). On the Coalescent Computer, all data is content addressable, and all code is data.
 
 The compoents of the protocol are:
   1) Data **schema**: structure of data and primitive types of fields; defined using a deterministic binary format
