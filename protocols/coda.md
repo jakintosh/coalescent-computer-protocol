@@ -1,6 +1,6 @@
 # Coda Protocol
 
-The `Coda Protocol` is a set of binary representations and procedures for storing and transmitting ***co***alescent ***da***ta. It is similar to binary serialization formats like CBOR, DER, and MessagePack, but is slightly more opinionated about what you are doing with. The protocol is designed to provide a foundational data layer for the Coalescent Computer, which is a networked computing environment built to replace the World Wide Web. In the context of the Coalescent Computer, coda it is not just a serialization format, but also the ***virtual file system***. As such, the protocol must be capable of supporting any possible data type, and must be flexible enough to be adapted for speed and size constraints in many different storage and networking environments.
+The `Coda Protocol` is a set of binary representations and procedures for storing and transmitting ***co***alescent ***da***ta. It is similar to binary serialization formats like CBOR, and MessagePack, but is concerned with more than just data on the wire; it is more easily comparable to something like ASN.1. The protocol is designed to provide a foundational data layer for the Coalescent Computer, which is a networked computing environment intended to replace the World Wide Web. In the context of the Coalescent Computer, `Coda` is not just a serialization format, but also the native data language; it serves as the canocial format for data as it travels from storage, across the wire, and into program memory. As such, the protocol must be capable of supporting any possible data, and must be flexible enough to be adapted for speed and size constraints in many different storage and networking environments.
 
 
 ## What is Coalescent Data?
@@ -152,9 +152,15 @@ what does a type declaration look like? can type declarations have associated da
 #### Schema
 ```
 [
+    /* Property Declaration */
     [
-        [length prefix][utf8 bytes],
-        [type id](optional)[length prefix][optional data],
+        /* Property Identifier */
+        0x00,                     /* string length prefix */
+        [0x00 .. 0x00],           /* utf8 bytes */
+
+        /* Type Description */
+        0x00,                     /* type identifier */
+        [0x00 .. 0x00],           /* optional description data */
     ],
     [...],
 ]
@@ -163,10 +169,11 @@ what does a type declaration look like? can type declarations have associated da
 #### Map
 ```
 [
-    (0) 0x00 00 00 00 00 00 00 00,
-    (1) 0x00 00 00 00 00 00 00 01,
-    (2) 0x00 00 00 00 00 00 00 02,
-    (3) 0x00 00 00 00 00 00 00 0F,
+    /* Pointers to buffer */
+    0x00 00 00 00 00 00 00 00,    /* pointer 0 */
+    0x00 00 00 00 00 00 00 01,    /* pointer 1 */
+    0x00 00 00 00 00 00 00 02,    /* pointer 2 */
+    0x00 00 00 00 00 00 00 0F,    /* pointer 3 */
 ]
 ```
 
@@ -190,23 +197,25 @@ byte  => 0x__
 #### Integers
 These values are always a fixed size (the bits in their suffix)
 ```
---Type---
-|-ID-|--Value
-UInt8  => 0x10  0x00
-UInt16 => 0x11  0x00 00
-UInt32 => 0x12  0x00 00 00 00
-UInt64 => 0x13  0x00 00 00 00 00 00 00 00
-Int8   => 0x14  0x00
-Int16  => 0x15  0x00 00
-Int32  => 0x16  0x00 00 00 00
-Int64  => 0x17  0x00 00 00 00 00 00 00 00
+|------ Type ------|---------- Buffer ---------|
+|-- Name ---|- ID -|---------- Value ----------|
+| UInt8  => | 0x10 | 0x00 •••••••••••••••••••• |
+| UInt16 => | 0x11 | 0x00 00 ••••••••••••••••• |
+| UInt32 => | 0x12 | 0x00 00 00 00 ••••••••••• |
+| UInt64 => | 0x13 | 0x00 00 00 00 00 00 00 00 |
+| Int8   => | 0x14 | 0x00 •••••••••••••••••••• |
+| Int16  => | 0x15 | 0x00 00 ••••••••••••••••• |
+| Int32  => | 0x16 | 0x00 00 00 00 ••••••••••• |
+| Int64  => | 0x17 | 0x00 00 00 00 00 00 00 00 |
 ```
 
 #### Floats
 These values are always a fixed size (the bits in their suffix)
 ```
-Float32 => 0x00 00 00 00
-Float64 => 0x00 00 00 00 00 00 00 00
+|------- Type ------|---------- Buffer ---------|
+|--- Name ---|- ID -|---------- Value ----------|
+| Float32 => | 0x00 | 0x00 00 00 00 •• •• •• •• |
+| Float64 => | 0x00 | 0x00 00 00 00 00 00 00 00 |
 ```
 
 ### Arrays
@@ -228,8 +237,6 @@ An array can be of a fixed size, or a dynamic size.
 ```
 
 ### Maps
-
-A map is an array
 
 ### Enums
 
